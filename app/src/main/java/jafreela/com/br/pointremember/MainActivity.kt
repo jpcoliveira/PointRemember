@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), AppAdapter.Callback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +25,13 @@ class MainActivity : AppCompatActivity() {
                 }
                 .sortedBy { it.name }
         recyclerviewApps.layoutManager = LinearLayoutManager(this)
-        recyclerviewApps.adapter = AppAdapter(appList)
+        recyclerviewApps.adapter = AppAdapter(appList, this)
+    }
+
+    override fun onClickAppItem(app: App) {
+//        val intent = packageManager.getLaunchIntentForPackage(app.packageName)
+        val intent = Intent(this, ScheduleNotificationActivity().javaClass)
+        intent.putExtra("app", app)
+        startActivity(intent)
     }
 }

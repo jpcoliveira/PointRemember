@@ -7,9 +7,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 
-class AppAdapter(apps: List<App>?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
-    val appList = apps
+class AppAdapter(val appList: List<App>?, val callback: Callback?)
+    : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return AppViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_app, parent, false))
@@ -22,22 +21,27 @@ class AppAdapter(apps: List<App>?) : RecyclerView.Adapter<RecyclerView.ViewHolde
             appList?.let { holder.bindData(appList.get(position)) }
     }
 
-    class AppViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    inner class AppViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
         val nameApp = itemView?.findViewById<TextView>(R.id.textNameApp)
         val imageApp = itemView?.findViewById<ImageView>(R.id.imageViewApp)
 
-        fun bindData(app: App) {
+        init {
+            itemView?.setOnClickListener(this)
+        }
+
+        fun bindData(app: App?) {
             nameApp?.text = app?.name
-            app?.icon.let { imageApp?.setImageDrawable(app.icon) }
+            app?.icon.let { imageApp?.setImageDrawable(app?.icon) }
+
         }
 
         override fun onClick(view: View?) {
-
+            appList?.let { callback?.onClickAppItem(appList[adapterPosition]) }
         }
     }
 
-    open interface Callback {
+    interface Callback {
         fun onClickAppItem(app: App)
     }
 }
