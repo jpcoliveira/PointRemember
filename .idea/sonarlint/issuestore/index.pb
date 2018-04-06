@@ -3,3 +3,17 @@ o
 ?app/src/main/java/jafreela/com/br/pointremember/MainActivity.kt,2/0/20c5a02f7709b0485dffa431bbf0559e2ca5e6a8
 Y
 )app/src/main/res/layout/activity_main.xml,7/6/76b07e40f24cce093536731477540f12e7da3cb6
+T
+$app/src/main/res/layout/item_app.xml,a/5/a50ac6db51ea57b1711fcaf7d814981056d7ed8c
+@
+app/build.gradle,f/4/f4a01d6a4fcb971362ec00a83903fd3902f52164
+j
+:app/src/main/res/layout/activity_schedule_notification.xml,b/f/bf28bcea39e4a5c1e410434ae10c27cb6b1d252c
+m
+=app/src/main/java/jafreela/com/br/pointremember/AppAdapter.kt,4/6/46f27c192c6393fcb2ed09fccee46e49c84b2791
+P
+ app/src/main/AndroidManifest.xml,8/c/8c55c3ccc257e5907959013f99656e4c8ec3903e
+
+Oapp/src/main/java/jafreela/com/br/pointremember/ScheduleNotificationActivity.kt,4/7/470f6de6788afe385468efa0f4f9f1b270da5292
+f
+6app/src/main/java/jafreela/com/br/pointremember/App.kt,8/c/8c0c66b552ee1a41c7d8b99bc5cc72c0b3486bc0

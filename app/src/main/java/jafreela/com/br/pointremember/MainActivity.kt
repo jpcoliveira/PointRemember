@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity(), AppAdapter.Callback {
     override fun onClickAppItem(app: App) {
 //        val intent = packageManager.getLaunchIntentForPackage(app.packageName)
         val intent = Intent(this, ScheduleNotificationActivity().javaClass)
-        intent.putExtra("app", app)
+        intent.putExtra("packagename", app.packageName)
         startActivity(intent)
     }
 }
