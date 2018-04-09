@@ -1,5 +1,6 @@
 package jafreela.com.br.pointremember
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -16,6 +17,7 @@ class MainActivity : AppCompatActivity(), AppAdapter.Callback {
         mainIntent.addCategory(Intent.CATEGORY_LAUNCHER)
         val pkgAppsList = getPackageManager().queryIntentActivities(mainIntent, 0)
         val appList = pkgAppsList
+                .asSequence()
                 .map { resolveInfo ->
                     App(
                             resolveInfo?.loadLabel(packageManager)?.toString(),
@@ -24,14 +26,20 @@ class MainActivity : AppCompatActivity(), AppAdapter.Callback {
                     )
                 }
                 .sortedBy { it.name }
+                .toList()
         recyclerviewApps.layoutManager = LinearLayoutManager(this)
         recyclerviewApps.adapter = AppAdapter(appList, this)
     }
 
     override fun onClickAppItem(app: App) {
-//        val intent = packageManager.getLaunchIntentForPackage(app.packageName)
-        val intent = Intent(this, ScheduleNotificationActivity().javaClass)
-        intent.putExtra("packagename", app.packageName)
+        val bundle = Bundle()
+        bundle.putString("_packageName_", app.packageName)
+        startActivityNew<ScheduleNotificationActivity>(bundle)
+    }
+
+    inline fun <reified T : Any> Context.startActivityNew(bundle: Bundle?) {
+        val intent = Intent(this, T::class.java)
+        bundle?.keySet()?.map { key -> intent.putExtra(key, bundle.get(key) as String) }
         startActivity(intent)
     }
 }

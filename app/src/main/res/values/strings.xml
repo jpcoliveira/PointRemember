@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Point Remember</string>
+    <string name="desc_entry_notification">Lembre-se de bater o ponto de entrada!</string>
+    <string name="desc_lunch_notification">Lembre-se de bater o ponto de almoço!</string>
 </resources>

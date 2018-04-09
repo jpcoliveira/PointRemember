@@ -1,68 +1,108 @@
 package jafreela.com.br.pointremember
 
-import android.app.AlarmManager
-import android.app.PendingIntent
 import android.app.TimePickerDialog
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
-import android.widget.TextView
+import com.orm.SugarRecord
 import kotlinx.android.synthetic.main.activity_schedule_notification.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-
 class ScheduleNotificationActivity : AppCompatActivity() {
 
-    lateinit var alarmMgr: AlarmManager
-    lateinit var alarmIntent: PendingIntent
+    lateinit var alarmScheduler: AlarmScheduler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_schedule_notification)
-        timeEntry.setOnClickListener { showTimePickerDialog { timeEntry } }
-        timeLunch.setOnClickListener { showTimePickerDialog { timeLunch } }
+
+        alarmScheduler = AlarmScheduler(this)
+
+        val namePackage = intent.getStringExtra("_packageName_")
+
+        initClocks()
 
         switch1.setOnCheckedChangeListener { compoundButton, isChecked ->
-
             if (isChecked) {
-
+                val entryDate = timeEntry.text.toString().getDateByFormatedString()
+                val lunchDate = timeLunch.text.toString().getDateByFormatedString()
+                createAlarms(
+                        listOf(
+                                getEntryAlarmByDate(entryDate, namePackage),
+                                getLunchAlarmByDate(lunchDate, namePackage)
+                        )
+                )
             } else {
-                alarmMgr = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-                val intent = Intent("ALARME")
-                val alarmIntent = PendingIntent.getBroadcast(this, 0, intent, 0)
-                alarmMgr.cancel(alarmIntent)
+                cancelAlarms()
             }
-
         }
     }
 
-    private fun showTimePickerDialog(textView: () -> TextView) {
-        val builder = TimePickerDialog(this,
-                TimePickerDialog.OnTimeSetListener { timePicker, hour, min ->
+    fun initClocks() {
+        val alarms = SugarRecord.findAll(AppAlarm::class.java)
 
-                    val calendar = Calendar.getInstance()
-                    calendar.time = Date(
-                            calendar.time.year,
-                            calendar.time.month,
-                            calendar.time.date,
-                            hour,
-                            min
-                    )
-                    val format = SimpleDateFormat("HH:mm")
-                    textView().text = format.format(calendar.time)
-                    Log.i("ALARME", calendar.time.toString())
+        alarms.forEach { appAlarm ->
+            if (appAlarm.typeNotification == "entry")
+                timeEntry.text = appAlarm.date.getFormatDate()
+            else
+                timeLunch.text = appAlarm.date.getFormatDate()
 
-                    alarmMgr = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-                    val intent = Intent(this, AlarmReceiver::class.java)
-                    alarmIntent = PendingIntent.getBroadcast(this, 0, intent, 0)
+            switch1.isChecked = true
+        }
 
-                    alarmMgr.setRepeating(AlarmManager.RTC, calendar.timeInMillis, AlarmManager.INTERVAL_DAY, alarmIntent);
+        timeEntry.setOnClickListener {
+            showTimePickerDialog({ date -> timeEntry.text = date.getFormatDate() }).show()
+        }
+
+        timeLunch.setOnClickListener {
+            showTimePickerDialog({ date -> timeLunch.text = date.getFormatDate() }).show()
+        }
+    }
 
 
-                }, 12, 0, true)
-        builder.show()
+    fun showTimePickerDialog(callback: (Date) -> Unit) =
+            TimePickerDialog(this,
+                    TimePickerDialog.OnTimeSetListener { timePicker, hour, min ->
+                        callback(createCurrentDateWith(hour, min))
+                    }, 12, 0, true)
+
+    fun createAlarms(alarms: List<AppAlarm>) {
+        alarms.forEach { appAlarm: AppAlarm ->
+            appAlarm.save()
+            alarmScheduler.createAlarm(appAlarm.date, appAlarm.id.toInt())
+        }
+    }
+
+    fun cancelAlarms() {
+
+        val alarms = SugarRecord.findAll(AppAlarm::class.java)
+
+        alarms.forEach { appAlarm: AppAlarm ->
+            appAlarm.delete()
+            alarmScheduler.cancelAlarms(appAlarm.id.toInt())
+        }
+    }
+
+    fun getEntryAlarmByDate(date: Date, namePackage: String) =
+            AppAlarm(
+                    namePackage,
+                    date,
+                    typeNotification = "entry",
+                    descNotification = getString(R.string.desc_entry_notification)
+            )
+
+    fun getLunchAlarmByDate(date: Date, namePackage: String) =
+            AppAlarm(
+                    namePackage,
+                    date,
+                    typeNotification = "lunch",
+                    descNotification = getString(R.string.desc_lunch_notification)
+            )
+
+    fun createCurrentDateWith(hour: Int, minute: Int) = Date(Date().year, Date().month, Date().date, hour, minute)
+    fun Date.getFormatDate() = SimpleDateFormat("HH:mm").format(time)
+    fun String.getDateByFormatedString(): Date {
+        val date = SimpleDateFormat("HH:mm").parse(this)
+        return createCurrentDateWith(date.hours, date.minutes)
     }
 }

@@ -17,3 +17,15 @@ P
 Oapp/src/main/java/jafreela/com/br/pointremember/ScheduleNotificationActivity.kt,4/7/470f6de6788afe385468efa0f4f9f1b270da5292
 f
 6app/src/main/java/jafreela/com/br/pointremember/App.kt,8/c/8c0c66b552ee1a41c7d8b99bc5cc72c0b3486bc0
+d
+4app/src/main/res/drawable/ic_launcher_background.xml,4/9/49845c622cb06d895975c7b1e3f943e320bce688
+S
+#.idea/sonarlint/issuestore/index.pb,9/f/9fe84ebb15faf917b7def6236dba604453cc61e0
+p
+@app/src/main/java/jafreela/com/br/pointremember/AlarmReceiver.kt,4/1/411c1bed1b2382495f512422155b6050cfb287bc
+h
+8app/src/main/res/drawable-v24/ic_launcher_foreground.xml,0/7/078508c831007ccb3938b355f0d30a8368f99a8d
+k
+;app/src/main/java/jafreela/com/br/pointremember/AppAlarm.kt,0/8/08ef29587b96d1d83f69541136313c0b4d5187db
+q
+Aapp/src/main/java/jafreela/com/br/pointremember/AlarmScheduler.kt,b/8/b8bfcea63ff27715c8d997500f3eb4dfb2b4c566
