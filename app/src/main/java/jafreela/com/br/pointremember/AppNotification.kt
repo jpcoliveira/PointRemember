@@ -1,5 +1,6 @@
 package jafreela.com.br.pointremember
 
+import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -10,14 +11,22 @@ import android.os.Build
 import android.support.annotation.RequiresApi
 import android.support.v4.app.NotificationCompat
 
-class AppNotification(val context: Context, val channelId: String) {
+class AppNotification(private val context: Context, private val channelId: String) {
 
-    val notificationManager by lazy {
+    private val notificationManager by lazy {
         context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     }
 
-    fun create(pendingIntent: PendingIntent): Notification {
-        return   NotificationCompat.Builder(context, channelId).apply {
+    fun create(pendingIntent: PendingIntent, id: Int) {
+        createNotification(id, builNotification(pendingIntent))
+    }
+
+    fun cancel(id: Int) {
+        notificationManager.cancel(id)
+    }
+
+    private fun builNotification(pendingIntent: PendingIntent): Notification {
+        return NotificationCompat.Builder(context, channelId).apply {
             setContentTitle(context.getString(R.string.remember))
             setContentText("")
             setPriority(NotificationCompat.PRIORITY_MAX)
@@ -31,8 +40,9 @@ class AppNotification(val context: Context, val channelId: String) {
         }.build()
     }
 
+    @SuppressLint("WrongConstant")
     @RequiresApi(Build.VERSION_CODES.O)
-    fun buildNotificationChannel(): NotificationChannel {
+    private fun buildNotificationChannel(): NotificationChannel {
         val notificationChannel = NotificationChannel(channelId, "notificacao", NotificationManager.IMPORTANCE_MAX)
         notificationChannel.setBypassDnd(true)
         notificationChannel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
@@ -40,11 +50,7 @@ class AppNotification(val context: Context, val channelId: String) {
         return notificationChannel
     }
 
-    fun cancel(id: Int) {
-        notificationManager.cancel(id)
-    }
-
-    fun notifyNotification(id: Int, notification: Notification) {
+    private fun createNotification(id: Int, notification: Notification) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             notificationManager.createNotificationChannel(buildNotificationChannel())
         }

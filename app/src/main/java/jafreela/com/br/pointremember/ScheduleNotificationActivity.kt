@@ -18,7 +18,7 @@ class ScheduleNotificationActivity : AppCompatActivity() {
 
         alarmScheduler = AlarmScheduler(this)
 
-        val namePackage = intent.getStringExtra("_packageName_")
+        val namePackage = intent.getStringExtra(Constants.PACKAGE_NAME)
 
         initClocks()
 

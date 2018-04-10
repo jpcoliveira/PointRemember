@@ -11,7 +11,8 @@ class AlarmScheduler(val context: Context) {
     fun createAlarm(date: Date, requestCode: Int) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(context, AlarmReceiver::class.java)
-        intent.putExtra("id", requestCode)
+        intent.setAction(Constants.Action.NOTIFICATION)
+        intent.putExtra(Constants.ID, requestCode)
 
         val pendingIntent = PendingIntent.getBroadcast(context, requestCode, intent, 0)
         alarmManager.setInexactRepeating(

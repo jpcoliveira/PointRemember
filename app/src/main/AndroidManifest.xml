@@ -33,6 +33,7 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="OPEN" />
+                <action android:name="ALARM" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
