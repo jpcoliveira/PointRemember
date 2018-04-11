@@ -49,5 +49,4 @@ class AlarmReceiver : BroadcastReceiver() {
         intentOpen.putExtra(Constants.ID, appAlarm.id.toInt())
         return PendingIntent.getBroadcast(mContext, appAlarm.id.toInt(), intentOpen, 0)
     }
-
 }
