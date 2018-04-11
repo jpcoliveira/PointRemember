@@ -4,15 +4,10 @@ import com.orm.SugarRecord
 import java.util.*
 
 class AppAlarm(
-        packageNameNew: String = "",
-        dateNew: Date = Date(),
-        typeNotification: String = "",
-        descNotification: String = "") : SugarRecord() {
-    val packageName = packageNameNew
-    val date = dateNew
-    val typeNotification = typeNotification
-    val descNotification = descNotification
-
+        val packageName: String = "",
+        val date: Date = Date(),
+        val typeNotification: String = "",
+        val descNotification: String = "") : SugarRecord() {
 
     override fun toString(): String {
         return "AppAlarm(packageName='$packageName', date=$date, typeNotification='$typeNotification', descNotification='$descNotification')"
