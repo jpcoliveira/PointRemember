@@ -1,4 +1,4 @@
-package jafreela.com.br.pointremember
+package jafreela.com.br.pointremember.ui
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import jafreela.com.br.pointremember.R
+import jafreela.com.br.pointremember.model.App
 
 class AppAdapter(val appList: List<App>?, val callback: Callback?)
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {

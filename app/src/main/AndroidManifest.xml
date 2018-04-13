@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:name="com.orm.SugarApp"
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -17,7 +17,7 @@
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,10 +25,10 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ScheduleNotificationActivity" />
+        <activity android:name=".ui.ScheduleNotificationActivity" />
 
         <receiver
-            android:name=".AlarmReceiver"
+            android:name=".domain.AlarmReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
