@@ -1,7 +1,7 @@
 package jafreela.com.br.pointremember.interfaces
 
-import jafreela.com.br.pointremember.model.AppAlarm
+import jafreela.com.br.pointremember.model.App
 
 interface RealmListener {
-    fun loadAlarms(alarms: List<AppAlarm>)
+    fun loadAppAlarms(apps: List<App>)
 }

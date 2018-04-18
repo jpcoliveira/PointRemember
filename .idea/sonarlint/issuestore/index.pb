@@ -52,9 +52,21 @@ r
 Bapp/src/main/java/jafreela/com/br/pointremember/ui/MainActivity.kt,c/5/c5bd56b76daecd5e4eee53501b1eb96e3a4e0dfc
 w
 Gapp/src/main/java/jafreela/com/br/pointremember/domain/AlarmReceiver.kt,4/6/46736a15040bcb05b4fe60e8da3afd57b7906ee5
-‚
-Rapp/src/main/java/jafreela/com/br/pointremember/ui/ScheduleNotificationActivity.kt,7/7/77d54e09a04c57181837792e22c326b59066d9e6
 w
 Gapp/src/main/java/jafreela/com/br/pointremember/database/AppAlarmDao.kt,3/c/3cdc8046fbd2bb8945a51e55ae34daedbc5ea513
 ;
 app/app.iml,7/c/7c1d2a1927c01fa75a9b4c74ea8addcc06b327ae
+
+Oapp/src/main/java/jafreela/com/br/pointremember/extensions/ContextExtensions.kt,2/2/22d0996b59841efaf872e345864a89b8d9ac0466
+Z
+*app/src/main/res/layout/item_app_alarm.xml,7/7/77b463703ef0e5236af3cf7f5532c4abc6bf7522
+u
+Eapp/src/main/java/jafreela/com/br/pointremember/ui/AppAlarmAdapter.kt,1/8/18b8bea67f5c9befa8c88aa0f696e855950a19b2
+|
+Lapp/src/main/java/jafreela/com/br/pointremember/extensions/DateExtensions.kt,f/6/f647c7250d869f7c6616974b5a720c251539ff1b
+[
++app/src/main/res/layout/item_select_app.xml,4/d/4d976fb9f70427d90a9f13802cf205bc8e0e56f6
+x
+Happ/src/main/java/jafreela/com/br/pointremember/ui/SelectAppAcitivity.kt,f/6/f686ed8eeab693528262b47f4bdd5623a8148c96
+i
+9app/src/main/res/layout/activity_select_app_acitivity.xml,0/a/0a8d1bce75d06f3d431b2babd0d9bd6d2c7edd8a

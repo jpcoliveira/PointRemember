@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import io.realm.RealmList
 import jafreela.com.br.pointremember.R
+import jafreela.com.br.pointremember.adapter.AppAdapter
 import jafreela.com.br.pointremember.database.AppAlarmDao
 import jafreela.com.br.pointremember.database.RealmManager
 import jafreela.com.br.pointremember.extensions.startActivityNew
@@ -23,37 +24,7 @@ class MainActivity : AppCompatActivity(), AppAdapter.Callback, RealmListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        realmDao.getAlarms()
 
-
-        /*val mainIntent = Intent(Intent.ACTION_MAIN, null)
-        mainIntent.addCategory(Intent.CATEGORY_LAUNCHER)
-        val pkgAppsList = getPackageManager().queryIntentActivities(mainIntent, 0)
-        val appList = pkgAppsList
-                .asSequence()
-                .map { resolveInfo ->
-                    App(
-                            resolveInfo?.loadLabel(packageManager)?.toString(),
-                            resolveInfo?.loadIcon(packageManager),
-                            resolveInfo?.activityInfo?.packageName
-                    )
-                }
-                .sortedBy { it.name }
-                .toList()*/
-
-        recyclerviewApps.layoutManager = LinearLayoutManager(this)
-
-        Log.i("MainActivity", "create")
-    }
-
-    override fun onClickAppItem(app: App) {
-        val bundle = Bundle()
-        bundle.putString("_packageName_", app.packageName)
-        startActivityNew<ScheduleNotificationActivity>(bundle)
-    }
-
-    override fun loadAlarms(list: List<AppAlarm>) {
-        Log.i("MainActivity", "loadAlarms")
 
         val alarmList = RealmList<AppAlarm>()
 
@@ -63,10 +34,32 @@ class MainActivity : AppCompatActivity(), AppAdapter.Callback, RealmListener {
         alarmList.add(AppAlarm(descNotification = "ola4"))
 
         val appList = listOf(
-                App(name = "teste1", packageName = "com.br", alarmList = alarmList),
-                App(name = "teste2", packageName = "com.br", alarmList = alarmList),
-                App(name = "teste3", packageName = "com.br", alarmList = alarmList))
+                App(name = "teste1", packageName = "com.br12", alarmList = alarmList),
+                App(name = "teste2", packageName = "com.br22", alarmList = alarmList),
+                App(name = "teste3", packageName = "com.br32", alarmList = alarmList))
 
-        recyclerviewApps.adapter = AppAdapter(appList, this)
+
+        appList.forEach { app: App -> realmDao.save(app) }
+
+
+        realmDao.getAlarms()
+
+        floatingActionButton.setOnClickListener { view ->
+            startActivityNew<SelectAppActivity>(null)
+        }
+        recyclerviewApps.layoutManager = LinearLayoutManager(this)
+
+        Log.i("MainActivity", "create")
+    }
+
+    override fun onClickAppItem(app: App) {
+        val bundle = Bundle()
+        bundle.putString("_packageName_", app.packageName)
+        startActivityNew<ScheduleActivity>(bundle)
+    }
+
+    override fun loadAppAlarms(apps: List<App>) {
+        Log.i("MainActivity", "loadAppAlarms")
+        recyclerviewApps.adapter = AppAdapter(apps, this)
     }
 }
