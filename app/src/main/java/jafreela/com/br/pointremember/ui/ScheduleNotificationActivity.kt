@@ -29,12 +29,12 @@ class ScheduleNotificationActivity : AppCompatActivity() {
             if (isChecked) {
                 val entryDate = timeEntry.text.toString().getDateByFormatedString()
                 val lunchDate = timeLunch.text.toString().getDateByFormatedString()
-                createAlarms(
+             /*   createAlarms(
                         listOf(
                                 getEntryAlarmByDate(entryDate, namePackage),
                                 getLunchAlarmByDate(lunchDate, namePackage)
                         )
-                )
+                )*/
             } else {
                 cancelAlarms()
             }
@@ -86,7 +86,7 @@ class ScheduleNotificationActivity : AppCompatActivity() {
 //        }
     }
 
-    fun getEntryAlarmByDate(date: Date, namePackage: String) =
+    /*fun getEntryAlarmByDate(date: Date, namePackage: String) =
             AppAlarm(
                     namePackage,
                     date =   date,
@@ -100,7 +100,7 @@ class ScheduleNotificationActivity : AppCompatActivity() {
                     date =  date,
                     typeNotification = "lunch",
                     descNotification = getString(R.string.desc_lunch_notification)
-            )
+            )*/
 
     fun createCurrentDateWith(hour: Int, minute: Int) = Date(Date().year, Date().month, Date().date, hour, minute)
     fun Date.getFormatDate() = SimpleDateFormat("HH:mm").format(time)

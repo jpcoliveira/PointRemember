@@ -1,5 +1,6 @@
 package jafreela.com.br.pointremember.ui
 
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -27,15 +28,18 @@ class AppAdapter(val appList: List<App>?, val callback: Callback?)
 
         val nameApp = itemView?.findViewById<TextView>(R.id.textNameApp)
         val imageApp = itemView?.findViewById<ImageView>(R.id.imageViewApp)
+        val recyclerAlarm = itemView?.findViewById<RecyclerView>(R.id.recyclerAlarms)
 
         init {
             itemView?.setOnClickListener(this)
+            recyclerAlarm?.layoutManager = LinearLayoutManager(itemView?.context)
         }
 
         fun bindData(app: App?) {
             nameApp?.text = app?.name
-            app?.icon.let { imageApp?.setImageDrawable(app?.icon) }
+            recyclerAlarm?.adapter = AppAlarmAdapter(app?.alarmList)
 
+//            app?.iconResource.let { imageApp?.setImageResource(app!!.iconResource!!) }
         }
 
         override fun onClick(view: View?) {

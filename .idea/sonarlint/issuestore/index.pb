@@ -56,3 +56,5 @@ Gapp/src/main/java/jafreela/com/br/pointremember/domain/AlarmReceiver.kt,4/6/46
 Rapp/src/main/java/jafreela/com/br/pointremember/ui/ScheduleNotificationActivity.kt,7/7/77d54e09a04c57181837792e22c326b59066d9e6
 w
 Gapp/src/main/java/jafreela/com/br/pointremember/database/AppAlarmDao.kt,3/c/3cdc8046fbd2bb8945a51e55ae34daedbc5ea513
+;
+app/app.iml,7/c/7c1d2a1927c01fa75a9b4c74ea8addcc06b327ae

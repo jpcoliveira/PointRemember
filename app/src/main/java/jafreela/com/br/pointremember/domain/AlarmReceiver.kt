@@ -47,7 +47,7 @@ class AlarmReceiver : BroadcastReceiver() {
     fun buildPendingIntentOpenApp(appAlarm: AppAlarm): PendingIntent {
         val intentOpen = Intent(mContext, AlarmReceiver::class.java)
         intentOpen.setAction(Constants.Action.OPEN)
-        intentOpen.putExtra(Constants.PACKAGE_NAME, appAlarm.packageName)
+//        intentOpen.putExtra(Constants.PACKAGE_NAME, appAlarm.packageName)
         intentOpen.putExtra(Constants.ID, appAlarm.id.toInt())
         return PendingIntent.getBroadcast(mContext, appAlarm.id.toInt(), intentOpen, 0)
     }

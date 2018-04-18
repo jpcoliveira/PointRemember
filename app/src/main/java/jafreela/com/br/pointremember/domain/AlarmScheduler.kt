@@ -26,7 +26,7 @@ class AlarmScheduler(val context: Context) {
                 pendingIntent)
     }
 
-    fun createUniqueAlarm(date: Date, requestCode: Int) {
+    fun createAlarm(date: Date, requestCode: Int) {
         val intent = Intent(context, AlarmReceiver::class.java)
         intent.setAction(Constants.Action.NOTIFICATION)
         intent.putExtra(Constants.ID, requestCode)
