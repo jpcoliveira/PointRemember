@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity(), AppAdapter.Callback, RealmListener {
         realmDao.getAlarms()
 
         floatingActionButton.setOnClickListener { view ->
-            startActivityNew<SelectAppActivity>(null)
+            startActivityNew<ScheduleActivity>(null)
         }
         recyclerviewApps.layoutManager = LinearLayoutManager(this)
 
