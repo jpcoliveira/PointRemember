@@ -1,31 +1,31 @@
-package jafreela.com.br.pointremember
+package jafreela.com.br.pointremember.domain
 
 import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.Context
 import android.media.RingtoneManager
 import android.os.Build
 import android.support.annotation.RequiresApi
 import android.support.v4.app.NotificationCompat
+import jafreela.com.br.pointremember.R
 
-class AppNotification(private val context: Context, private val channelId: String) {
+class AlarmNotification(private val context: Context, private val channelId: String) {
 
     private val notificationManager by lazy {
         context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     }
 
-    fun create(pendingIntent: PendingIntent, id: Int) {
-        createNotification(id, builNotification(pendingIntent))
+    fun create(actionList: List<NotificationCompat.Action>, id: Int) {
+        createNotification(id, builNotification(actionList))
     }
 
     fun cancel(id: Int) {
         notificationManager.cancel(id)
     }
 
-    private fun builNotification(pendingIntent: PendingIntent): Notification {
+    private fun builNotification(actionList: List<NotificationCompat.Action>): Notification {
         return NotificationCompat.Builder(context, channelId).apply {
             setContentTitle(context.getString(R.string.remember))
             setContentText("")
@@ -34,7 +34,11 @@ class AppNotification(private val context: Context, private val channelId: Strin
             setAutoCancel(true)
             setColorized(true)
             setColor(context.resources.getColor(R.color.accent_material_light))
-            addAction(R.drawable.ic_launcher_background, context.getString(R.string.open), pendingIntent)
+
+            actionList.forEach { action: NotificationCompat.Action ->
+                addAction(action)
+            }
+
             setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
             setVibrate(longArrayOf(300, 500, 300, 500))
         }.build()

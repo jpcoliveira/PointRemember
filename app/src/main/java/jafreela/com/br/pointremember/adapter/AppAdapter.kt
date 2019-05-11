@@ -1,11 +1,14 @@
-package jafreela.com.br.pointremember
+package jafreela.com.br.pointremember.adapter
 
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import jafreela.com.br.pointremember.R
+import jafreela.com.br.pointremember.model.App
 
 class AppAdapter(val appList: List<App>?, val callback: Callback?)
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -25,15 +28,17 @@ class AppAdapter(val appList: List<App>?, val callback: Callback?)
 
         val nameApp = itemView?.findViewById<TextView>(R.id.textNameApp)
         val imageApp = itemView?.findViewById<ImageView>(R.id.imageViewApp)
+        val recyclerAlarm = itemView?.findViewById<RecyclerView>(R.id.recyclerAlarms)
 
         init {
             itemView?.setOnClickListener(this)
+            recyclerAlarm?.layoutManager = LinearLayoutManager(itemView?.context)
         }
 
         fun bindData(app: App?) {
             nameApp?.text = app?.name
-            app?.icon.let { imageApp?.setImageDrawable(app?.icon) }
-
+            recyclerAlarm?.adapter = AppAlarmAdapter(app?.alarmList)
+//            app?.iconResource.let { imageApp?.setImageResource(app!!.iconResource!!) }
         }
 
         override fun onClick(view: View?) {

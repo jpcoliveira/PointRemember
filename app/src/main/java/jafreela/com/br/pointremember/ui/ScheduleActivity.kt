@@ -1,14 +1,17 @@
-package jafreela.com.br.pointremember
+package jafreela.com.br.pointremember.ui
 
 import android.app.TimePickerDialog
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import com.orm.SugarRecord
+import jafreela.com.br.pointremember.domain.AlarmScheduler
+import jafreela.com.br.pointremember.util.Constants
+import jafreela.com.br.pointremember.R
+import jafreela.com.br.pointremember.model.AppAlarm
 import kotlinx.android.synthetic.main.activity_schedule_notification.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ScheduleNotificationActivity : AppCompatActivity() {
+class ScheduleActivity : AppCompatActivity() {
 
     lateinit var alarmScheduler: AlarmScheduler
 
@@ -26,12 +29,12 @@ class ScheduleNotificationActivity : AppCompatActivity() {
             if (isChecked) {
                 val entryDate = timeEntry.text.toString().getDateByFormatedString()
                 val lunchDate = timeLunch.text.toString().getDateByFormatedString()
-                createAlarms(
+             /*   createAlarms(
                         listOf(
                                 getEntryAlarmByDate(entryDate, namePackage),
                                 getLunchAlarmByDate(lunchDate, namePackage)
                         )
-                )
+                )*/
             } else {
                 cancelAlarms()
             }
@@ -39,16 +42,16 @@ class ScheduleNotificationActivity : AppCompatActivity() {
     }
 
     fun initClocks() {
-        val alarms = SugarRecord.findAll(AppAlarm::class.java)
-
-        alarms.forEach { appAlarm ->
-            if (appAlarm.typeNotification == "entry")
-                timeEntry.text = appAlarm.date.getFormatDate()
-            else
-                timeLunch.text = appAlarm.date.getFormatDate()
-
-            switch1.isChecked = true
-        }
+//        val alarms = SugarRecord.findAll(AppAlarm::class.java)
+//
+//        alarms.forEach { appAlarm ->
+//            if (appAlarm.typeNotification == "entry")
+//                timeEntry.text = appAlarm.date.getFormatDate()
+//            else
+//                timeLunch.text = appAlarm.date.getFormatDate()
+//
+//            switch1.isChecked = true
+//        }
 
         timeEntry.setOnClickListener {
             showTimePickerDialog({ date -> timeEntry.text = date.getFormatDate() }).show()
@@ -68,25 +71,25 @@ class ScheduleNotificationActivity : AppCompatActivity() {
 
     fun createAlarms(alarms: List<AppAlarm>) {
         alarms.forEach { appAlarm: AppAlarm ->
-            appAlarm.save()
-            alarmScheduler.createAlarm(appAlarm.date, appAlarm.id.toInt())
+//            appAlarm.save()
+            alarmScheduler.createRepeatingAlarm(appAlarm.date, appAlarm.id.toInt())
         }
     }
 
     fun cancelAlarms() {
 
-        val alarms = SugarRecord.findAll(AppAlarm::class.java)
+//        val alarms = SugarRecord.findAll(AppAlarm::class.java)
 
-        alarms.forEach { appAlarm: AppAlarm ->
-            appAlarm.delete()
-            alarmScheduler.cancelAlarms(appAlarm.id.toInt())
-        }
+//        alarms.forEach { appAlarm: AppAlarm ->
+//            appAlarm.delete()
+//            alarmScheduler.cancelAlarms(appAlarm.id.toInt())
+//        }
     }
 
-    fun getEntryAlarmByDate(date: Date, namePackage: String) =
+    /*fun getEntryAlarmByDate(date: Date, namePackage: String) =
             AppAlarm(
                     namePackage,
-                    date,
+                    date =   date,
                     typeNotification = "entry",
                     descNotification = getString(R.string.desc_entry_notification)
             )
@@ -94,10 +97,10 @@ class ScheduleNotificationActivity : AppCompatActivity() {
     fun getLunchAlarmByDate(date: Date, namePackage: String) =
             AppAlarm(
                     namePackage,
-                    date,
+                    date =  date,
                     typeNotification = "lunch",
                     descNotification = getString(R.string.desc_lunch_notification)
-            )
+            )*/
 
     fun createCurrentDateWith(hour: Int, minute: Int) = Date(Date().year, Date().month, Date().date, hour, minute)
     fun Date.getFormatDate() = SimpleDateFormat("HH:mm").format(time)

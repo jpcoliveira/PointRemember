@@ -1,4 +1,4 @@
-package jafreela.com.br.pointremember
+package jafreela.com.br.pointremember.util
 
 class Constants {
     companion object {
